@@ -9,13 +9,15 @@ from utils.activation_functions import Sigmoid
 
 class MyLogisticRegression:
     def __init__(self, lr, n_iter):
+        # Set hyper-parameters
         self.lr = lr
         self.n_iter = n_iter
         self._sigmoid = Sigmoid()
         self.losses = []
         self.train_accuracies = []
 
-    def initailize_weights(self, X):
+    def initialize_weights(self, X):
+        # Initialize weights and biases
         n_features = X.shape[1]
         limit = 1 / math.sqrt(n_features)
         self.W = np.random.uniform(low=-limit, high=limit, size=(n_features, 1))
@@ -27,67 +29,76 @@ class MyLogisticRegression:
         return X
 
     def fit(self, X, y):
-        # Prepare part
+        # Correct input format
         X = self._transform_x(X)
         X = self.padding_input(X)
         y = self._transform_y(y)
-        self.initailize_weights(X)
+
+        self.initialize_weights(X)                      # Initialize weights and biases
         origin_lr = self.lr
 
-        # Calculate part
+        # Training the model
+        # Epoch loop
         for i in range(self.n_iter):
             # Update learning rate
             self.lr = origin_lr / math.sqrt(i + 1)
-            # Calculate the features
-            z = X @ self.W
-            # From feature, calculate the output probability
-            h = self._sigmoid(z)
-            # Calculate gradient, update weights
-            dW = self.gradient_bce_loss(X, h, y)
-            self.W -= self.lr * dW
-            # Calculate metrics
-            loss = self.compute_bce_loss(y, h)
-            y_pred = np.where(h >= 0.5, 1, 0)
-            acc_score = accuracy_score(y, y_pred)
+
+            # Forward pass
+            z = X @ self.W                              # Calculate the features
+            a = self._sigmoid(z)                        # Sigmoid Func: From feature, calculate the output probability
+
+            # Compute the loss
+            loss = self.BCELoss(y, a)                   # Binary cross entropy loss
             self.losses.append(loss)
+
+            # Backpropagation
+            dW = self.gradient_BCELoss(X, y, a)         # Compute gradient
+
+            # Update weights
+            self.W -= self.lr * dW
+
+            # Computer other metrics
+            y_pred = np.where(a >= 0.5, 1, 0)
+            acc_score = accuracy_score(y, y_pred)       # Compute accuracy score
             self.train_accuracies.append(acc_score)
+
+            # Print epoch result
             # print(f'Epoch {i}, lr = {self.lr}, bce_loss: {loss}')
             # print(f'Epoch {i}, acc: {acc_score}')
 
-    def compute_bce_loss(self, y, h):
+    @staticmethod
+    def BCELoss(y, a):
         # Binary cross entropy LOSS
         epsilon = 1e-15
-        # Limits predicted values to the interval (epsilon, 1 - epsilon)
-        h = np.clip(h, epsilon, 1 - epsilon)
+        # Limits predicted probabilities to the interval (epsilon, 1 - epsilon)
+        a = np.clip(a, epsilon, 1 - epsilon)
 
-        y_zero_loss = (1 - y) * np.log(1 - h)
-        y_one_loss = y * np.log(h)
+        y_zero_loss = (1 - y) * np.log(1 - a)
+        y_one_loss = y * np.log(a)
         return - np.mean(y_zero_loss + y_one_loss)
-        # return self.binary_cross_entropy(y, h)
 
-    def gradient_bce_loss(self, X, h, y):
+    @staticmethod
+    def gradient_BCELoss(X, y, a):
         # Derivative of binary cross entropy
-        # Sum of gradient of the batch computation, must be divided by y.shape[0]
-        dW = X.transpose() @ (h - y) / y.shape[0]
+        # Multiply result is sum of gradient of the batch computation => Must be divided by batch_len
+        dW = X.transpose() @ (a - y) / y.shape[0]
         return dW
 
     def predict(self, X):
-        # Prepare part
+        # Correct input format
         X = self._transform_x(X)
         X = self.padding_input(X)
-        # Calculate part
+
+        # Forward pass & Calculate predicted output class
         h = self._sigmoid(X @ self.W)
         return np.where(h >= 0.5, 1, 0)
 
-    def _transform_x(self, x):
+    @staticmethod
+    def _transform_x(x):
         x = copy.deepcopy(x)
         return x
 
-    def _transform_y(self, y):
+    @staticmethod
+    def _transform_y(y):
         y = copy.deepcopy(y)
         return y.reshape(y.shape[0], 1)
-
-
-
-
-
