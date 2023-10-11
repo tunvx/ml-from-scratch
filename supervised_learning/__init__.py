@@ -1,2 +1,3 @@
 from .l01_logistic_regression import MyLogisticRegression
 from .l02_linear_regression import MyLinearRegression
+from .l03_multinomial_regression import MyMultinomialRegression
