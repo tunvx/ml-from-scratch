@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.datasets import load_breast_cancer, load_diabetes, load_iris
 from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, mean_squared_error, classification_report
 from sklearn.model_selection import train_test_split
 
@@ -70,8 +71,29 @@ def test03_multinomial_model():
     print(f'With {n_iter} iters, loss my model: {loss}')
     print(classification_report(y_te, y_pred))
 
+def test04_knn_classifier_model():
+    X, y = sklearn_to_df(load_iris())
+    print(X.shape)
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    n_iter = 500
+    model = KNeighborsClassifier()
+    model.fit(X_tr, y_tr)
+    y_pred = model.predict(X_te)
+    accuracy = accuracy_score(y_te, y_pred)
+    print(f'With {n_iter} iters, accuracy sklearn model: {accuracy}')
+    print(classification_report(y_te, y_pred))
+
+    model1 = MyKNNClassifier(k=5)
+    model1.fit(X_tr, y_tr)
+    y_pred = model1.predict(X_te)
+    loss = mean_squared_error(y_te, y_pred)
+    print(f'With {n_iter} iters, loss my model: {loss}')
+    print(classification_report(y_te, y_pred))
+
 
 if __name__ == "__main__":
-    test01_logistic_model()
-    test02_linear_model()
-    test03_multinomial_model()
+    # test01_logistic_model()
+    # test02_linear_model()
+    # test03_multinomial_model()
+    test04_knn_classifier_model()
