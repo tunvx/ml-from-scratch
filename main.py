@@ -4,6 +4,8 @@ from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, mean_squared_error, classification_report
 from sklearn.model_selection import train_test_split
+# Generate synthetic data
+from sklearn.datasets import make_classification
 
 from data.load_data import sklearn_to_df
 from supervised_learning import *
@@ -71,6 +73,7 @@ def test03_multinomial_model():
     print(f'With {n_iter} iters, loss my model: {loss}')
     print(classification_report(y_te, y_pred))
 
+
 def test04_knn_classifier_model():
     X, y = sklearn_to_df(load_iris())
     print(X.shape)
@@ -92,8 +95,36 @@ def test04_knn_classifier_model():
     print(classification_report(y_te, y_pred))
 
 
+# TEST FOR LOGISTIC REGRESSION
+def test05_mlp_model():
+    X, Y = make_classification(n_samples=1200, n_features=5, n_classes=2, random_state=42)
+    X_tr, X_te, y_tr, y_te = train_test_split(X, Y)
+
+
+    n_epochs = 1000
+
+    model1 = MyLogisticRegression(lr=0.1, n_iter=n_epochs)
+    model1.fit(X_tr, y_tr)
+    y_pred = model1.predict(X_te)
+    accuracy = accuracy_score(y_te, y_pred)
+    print(f'With {n_epochs} epochs, accuracy my model: {accuracy}')
+    print(classification_report(y_te, y_pred))
+
+    # Instantiate the model
+    model = MLPBinaryClassification(n_input=5, n_hidden=8, n_output=1)
+
+    # Train the model
+    model.fit(X_tr, y_tr, 0.2, n_epochs)
+
+    y_pred = model.predict(X_te)
+    accuracy = accuracy_score(y_te, y_pred)
+    print(f'With {n_epochs} epochs, accuracy sklearn model: {accuracy}')
+    print(classification_report(y_te, y_pred))
+
+
 if __name__ == "__main__":
     # test01_logistic_model()
     # test02_linear_model()
     # test03_multinomial_model()
-    test04_knn_classifier_model()
+    # test04_knn_classifier_model()
+    test05_mlp_model()
