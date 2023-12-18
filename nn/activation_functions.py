@@ -31,7 +31,7 @@ class Tanh:
 
 
 class ReLU:
-    def __init__(self, alpha):
+    def __init__(self, alpha=0.01):
         self.alpha = alpha
 
     def __call__(self, x):
