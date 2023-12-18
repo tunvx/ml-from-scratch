@@ -4,7 +4,7 @@ import numpy as np
 import math
 import copy
 
-from utils.activation_functions import Sigmoid
+from nn.activation_functions import Sigmoid
 
 
 class MyLogisticRegression:

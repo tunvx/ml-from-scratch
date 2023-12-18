@@ -31,3 +31,9 @@ class Softmax:
         p = self.__call__(x)
         return p * (1 - p)
 
+class Tanh:
+    def __call__(self, x):
+        return np.tanh(x)
+
+    def gradient(self, x):
+        1 - self.__call__(x) ** 2
