@@ -17,9 +17,6 @@ class Sigmoid:
 
         return sigmoid_x
 
-    def gradient(self, x):
-        return self.__call__(x) * (1 - self.__call__(x))
-
 
 class Softmax:
     def __call__(self, x):
@@ -27,13 +24,7 @@ class Softmax:
         softmax_x = e_x / np.sum(e_x, axis=-1, keepdims=True)
         return softmax_x
 
-    def gradient(self, x):
-        p = self.__call__(x)
-        return p * (1 - p)
 
 class Tanh:
     def __call__(self, x):
         return np.tanh(x)
-
-    def gradient(self, x):
-        1 - self.__call__(x) ** 2
