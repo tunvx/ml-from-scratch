@@ -28,7 +28,7 @@ class MyLogisticRegression:
         X = np.concatenate((intercept, X), axis=1)
         return X
 
-    def fit(self, X, y):
+    def fit(self, X, y, ):
         # Correct input format
         X = self._transform_x(X)
         X = self.padding_input(X)
