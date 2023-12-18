@@ -28,3 +28,11 @@ class Softmax:
 class Tanh:
     def __call__(self, x):
         return np.tanh(x)
+
+
+class ReLU:
+    def __init__(self, alpha):
+        self.alpha = alpha
+
+    def __call__(self, x):
+        return np.where(x > 0, x, x * self.alpha)
