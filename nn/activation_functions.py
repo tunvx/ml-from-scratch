@@ -31,6 +31,11 @@ class Tanh:
 
 
 class ReLU:
+    def __call__(self, x):
+        return np.maximum(0, x)
+
+
+class LeakyReLU:
     def __init__(self, alpha=0.01):
         self.alpha = alpha
 
