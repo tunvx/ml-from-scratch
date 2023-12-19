@@ -79,8 +79,6 @@ class MLPBinaryClassification:
 
             for i in range(0, X.shape[0], batch_size):
                 batch_indices = indices[i:i + batch_size]
-                if epoch == 1:
-                    print(i)
                 X_batch = X[batch_indices]
                 Y_batch = Y[batch_indices]
 
