@@ -15,4 +15,9 @@ class BCELoss:
 
 class MSELoss:
     def __call__(self, y_true, y_pred):
-        return np.sum(np.power(y_true - y_pred, 2)) / y_true.shape[0]
+        # Check if y_true and y_pred have the same shape
+        if y_true.shape != y_pred.shape:
+            raise ValueError(f"Shapes of y_true {y_true.shape} and y_pred {y_pred.shape} must be the same.")
+
+        return np.mean((y_true - y_pred) ** 2)
+
