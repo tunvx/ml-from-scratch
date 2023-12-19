@@ -7,7 +7,7 @@ import nn
 from nn import *
 
 # Set a random seed for reproducibility
-np.random.seed(42)  # You can use any integer value as the seed
+np.random.seed(42)
 
 
 class MLPBinaryClassification:
@@ -73,14 +73,11 @@ class MLPBinaryClassification:
             # Adaptive learning rate scheduling (e.g., inverse square root decay)
             lr = learning_rate / math.sqrt(epoch + 1)
 
-            # Shuffle the data and split it into batches
-            indices = np.arange(X.shape[0])
-            np.random.shuffle(indices)
+            for start_idx in range(0, X.shape[0], batch_size):
+                end_idx = start_idx + batch_size
 
-            for i in range(0, X.shape[0], batch_size):
-                batch_indices = indices[i:i + batch_size]
-                X_batch = X[batch_indices]
-                Y_batch = Y[batch_indices]
+                X_batch = X[start_idx:end_idx]
+                Y_batch = Y[start_idx:end_idx]
 
                 # Forward propagation
                 A2, cache = self.forward_propagation(X_batch)
@@ -92,27 +89,26 @@ class MLPBinaryClassification:
                 self.optimize_step(gradients, lr)
 
             # Calculate and store training loss and accuracy
-            loss = self.BCELoss(Y, self.predict(X))
-            Y_pred = np.where(self.predict(X) >= 0.5, 1, 0)
+            Y_pred = self.predict(X)
+            loss = self.BCELoss(Y, Y_pred)
             acc = accuracy_score(Y, Y_pred)
             self.train_loss.append(loss)
             self.train_accuracy.append(acc)
 
-            # Print the loss every 50 epochs
-            if epoch % 10 == 0:
+            # Print the loss every epoch
+            if epoch % 1 == 0:
                 print(f"Epoch {epoch}, bce_loss: {loss:.2f}, accuracy: {acc:.4f}")
 
     def predict(self, X):
         # Perform predictions on new data
         A2, _ = self.forward_propagation(X)
-        return np.where(A2 >= 0.5, 1, 0)
+        return (A2 >= 0.5).astype(int)
 
     def score(self, X, Y):
         X = self._transform_x(X)
         Y = self._transform_y(Y)
 
-        A2, _ = self.forward_propagation(X)
-        Y_pred = np.where(A2 >= 0.5, 1, 0)
+        Y_pred = self.predict(X)
         acc = accuracy_score(Y, Y_pred)
         return acc
 
