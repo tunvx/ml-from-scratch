@@ -6,6 +6,9 @@ from sklearn.metrics import accuracy_score
 import nn
 from nn import *
 
+# Set a random seed for reproducibility
+np.random.seed(42)  # You can use any integer value as the seed
+
 
 class MLPBinaryClassification:
     def __init__(self, n_input, n_hidden=4, n_output=1):
@@ -61,34 +64,45 @@ class MLPBinaryClassification:
         self.linear2.W -= learning_rate * grads["dW2"]
         self.linear2.b -= learning_rate * grads["db2"]
 
-    def fit(self, X, Y, learning_rate=0.01, epochs=1000):
+    def fit(self, X, Y, batch_size=16, learning_rate=0.01, epochs=1000):
         # Transform input and target data
         X = self._transform_x(X)
         Y = self._transform_y(Y)
 
         for epoch in range(epochs):
             # Adaptive learning rate scheduling (e.g., inverse square root decay)
-            lr = learning_rate / math.sqrt(epoch+1)
+            lr = learning_rate / math.sqrt(epoch + 1)
 
-            # Forward propagation
-            A2, cache = self.forward_propagation(X)
+            # Shuffle the data and split it into batches
+            indices = np.arange(X.shape[0])
+            np.random.shuffle(indices)
 
-            # Backward propagation
-            gradients = self.backward_propagation(cache, X, Y)
+            for i in range(0, X.shape[0], batch_size):
+                batch_indices = indices[i:i + batch_size]
+                if epoch == 1:
+                    print(i)
+                X_batch = X[batch_indices]
+                Y_batch = Y[batch_indices]
 
-            # Update parameters
-            self.optimize_step(gradients, lr)
+                # Forward propagation
+                A2, cache = self.forward_propagation(X_batch)
+
+                # Backward propagation
+                gradients = self.backward_propagation(cache, X_batch, Y_batch)
+
+                # Update parameters
+                self.optimize_step(gradients, lr)
 
             # Calculate and store training loss and accuracy
-            loss = self.BCELoss(Y, A2)
-            Y_pred = np.where(A2 >= 0.5, 1, 0)
+            loss = self.BCELoss(Y, self.predict(X))
+            Y_pred = np.where(self.predict(X) >= 0.5, 1, 0)
             acc = accuracy_score(Y, Y_pred)
             self.train_loss.append(loss)
             self.train_accuracy.append(acc)
 
             # Print the loss every 50 epochs
-            if epoch % 50 == 0:
-                print(f"Epoch {epoch}, Loss: {loss}")
+            if epoch % 10 == 0:
+                print(f"Epoch {epoch}, bce_loss: {loss:.2f}, accuracy: {acc:.4f}")
 
     def predict(self, X):
         # Perform predictions on new data
@@ -115,3 +129,4 @@ class MLPBinaryClassification:
         # Transform target data to a column vector
         y = copy.deepcopy(y)
         return y.reshape(-1, 1)
+
