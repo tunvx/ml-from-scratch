@@ -16,7 +16,7 @@ class SGDOptimizer:
         return self.model.grads()
 
     def zero_grad(self):
-        for g in self.grads():
+        for g in self.model.grads():
             g.fill(0)
 
     def step(self):
@@ -26,5 +26,6 @@ class SGDOptimizer:
         # the learning rate is reduced over time for convergence
         self.current_step += 1
         for p, g in zip(self.parameters(), self.grads()):
-            lr = 1.0 / math.sqrt(self.current_step) * self.learning_rate
-            p -= lr * g
+            g = self.regularization * p + g
+            g = np.clip(g, -1, 1)
+            p -= 1.0 / math.sqrt(self.current_step) * self.learning_rate * g
