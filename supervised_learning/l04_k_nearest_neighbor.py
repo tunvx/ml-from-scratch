@@ -31,10 +31,10 @@ class MyKNNClassifier:
         y_pred = np.empty(X.shape[0])
         # Determine the class of each sample
         for i, test_sample in enumerate(X):
-            # Find indices of the K-nearest neighbors for each data point in X
+            # Find indices of the K-nearest neighbors for each dataset point in X
             k_nearest_indices = np.argsort([euclidean_distance(test_sample, x) for x in self.X_train])[:self.k]
             # Get labels of k nearest neighbors
             k_nearest_neighbors = np.array([self.y_train[idx] for idx in k_nearest_indices])
-            # Predict the class with the highest count for each data point in X
+            # Predict the class with the highest count for each dataset point in X
             y_pred[i] = self._vote(k_nearest_neighbors)
         return y_pred
