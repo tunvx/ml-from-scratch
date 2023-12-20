@@ -28,7 +28,7 @@ class Linear:
         Forward pass through the linear layer.
 
         Parameters:
-        - x: Input data of shape (N, n_in)
+        - x: Input dataset of shape (N, n_in)
 
         Returns:
         - Z: Output of the linear layer, Z = XW + b
