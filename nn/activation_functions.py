@@ -8,6 +8,9 @@ class Sigmoid:
     def __call__(self, z):
         return self.forward(z)
 
+    def info(self):
+        print("Sigmoid layer")
+
     def forward(self, z):
         """
         Compute the forward pass of the sigmoid activation function.
@@ -46,19 +49,92 @@ class Sigmoid:
         self.dz = dA * sigmoid_derivative
         return self.dz
 
+    def parameters(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def grads(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
     def train(self):
+        """
+        Placeholder for training-related functionality.
+        """
         pass
 
     def eval(self):
+        """
+        Placeholder for evaluation-related functionality.
+        """
         pass
 
 
-class ReLu:
+class Softmax:
     def __init__(self):
         pass
 
     def __call__(self, z):
         return self.forward(z)
+
+    def info(self):
+        print("Softmax layer")
+
+    def forward(self, z):
+        """
+        Compute the forward pass of the softmax activation function.
+
+        Parameters:
+        - z: Input to the softmax function (output of the linear layer)
+
+        Returns:
+        - A: Output of the softmax function
+        """
+        exp_z = np.exp(z - np.max(z, axis=1, keepdims=True))
+        self.output = exp_z / np.sum(exp_z, axis=1, keepdims=True)
+        return self.output
+
+    def backward(self, dA):
+        """
+        Compute the backward pass of the softmax activation function.
+
+        Parameters:
+        - dA: Gradient of the loss with respect to the output of the softmax (dL/dsoftmax)
+
+        Returns:
+        - dz: Gradient of the loss with respect to the input to the softmax (dL/dz)
+        """
+        softmax_derivative = self.output * (1 - self.output)
+        dz = dA * softmax_derivative
+        return dz
+
+    def parameters(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def grads(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def train(self):
+        """
+        Placeholder for training-related functionality.
+        """
+        pass
+
+    def eval(self):
+        """
+        Placeholder for evaluation-related functionality.
+        """
+        pass
+
+
+
+class ReLU:
+    def __init__(self):
+        pass
+
+    def __call__(self, z):
+        return self.forward(z)
+
+    def info(self):
+        print("ReLu layer")
 
     def forward(self, z):
         """
@@ -89,8 +165,20 @@ class ReLu:
         self.dz[self.input < 0] = 0
         return self.dz
 
+    def parameters(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def grads(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
     def train(self):
+        """
+        Placeholder for training-related functionality.
+        """
         pass
 
     def eval(self):
+        """
+        Placeholder for evaluation-related functionality.
+        """
         pass

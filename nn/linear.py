@@ -16,6 +16,9 @@ class Linear:
         self.dW = np.zeros_like(self.weight)
         self.db = np.zeros_like(self.bias)
 
+    def info(self):
+        print(f"Linear init: weight ({self.weight.shape}), bias ({self.bias.shape})")
+
     def __call__(self, x):
         # Make the instance callable, allowing it to be used as a function
         return self.forward(x)

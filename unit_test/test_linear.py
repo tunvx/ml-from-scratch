@@ -2,6 +2,7 @@ import numpy as np
 import unittest
 import math
 import nn
+from supervised_learning.l05_mlp import MyMLPClassifier
 
 
 class TestLinearMethods(unittest.TestCase):
@@ -47,6 +48,31 @@ class TestLinearMethods(unittest.TestCase):
         self.assertEqual(linear.dW.shape, linear.weight.shape)
         self.assertEqual(linear.db.shape, linear.bias.shape)
 
+
+class TestMLPMethods(unittest.TestCase):
+    def test_mlp_init(self):
+        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_classes=2)
+        layer0 = model.layers[0]
+        layer1 = model.layers[1]
+        self.assertEqual(model.n_in, 10)
+        self.assertEqual(model.hiddens, [5, 2])
+        self.assertEqual(layer0.n_in, 10)
+        self.assertEqual(layer0.n_out, 5)
+        self.assertEqual(layer1.n_in, 5)
+        self.assertEqual(layer1.n_out, 2)
+
+    def test_mlp_forward(self):
+        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_classes=2)
+        x = np.zeros((3, 10), dtype=np.float32)
+        y = model.forward(x)
+        self.assertEqual(y.shape, (3, 2))
+
+    def test_mlp_backward(self):
+        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_classes=2)
+        x = np.zeros((3, 10), dtype=np.float32)
+        y = model.forward(x)
+        dx = model.backward(np.ones_like(y))
+        self.assertEqual(dx.shape, x.shape)
 
 if __name__ == '__main__':
     unittest.main()

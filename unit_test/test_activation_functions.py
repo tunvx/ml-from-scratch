@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 
-from nn import Sigmoid
+from nn import Sigmoid, ReLU
 
 
 class TestSigmoidMethods(unittest.TestCase):
@@ -29,5 +29,31 @@ class TestSigmoidMethods(unittest.TestCase):
         np.testing.assert_allclose(actual_dz, expected_dz, rtol=1e-6)
 
 
+class TestReLuMethods(unittest.TestCase):
+    def test_relu_forward_positive_elements(self):
+        relu = ReLU()
+        z = np.array([[1.0, 2.0, 3.0], [0.5, 1.0, 2.0]])
+        expected_output = np.maximum(z, 0)
+        actual_output = relu.forward(z)
+        np.testing.assert_allclose(actual_output, expected_output, rtol=1e-6)
+
+    def test_relu_forward_negative_elements(self):
+        relu = ReLU()
+        z = np.array([[-1.0, -2.0, -3.0], [-0.5, -1.0, -2.0]])
+        expected_output = np.maximum(z, 0)
+        actual_output = relu.forward(z)
+        np.testing.assert_allclose(actual_output, expected_output, rtol=1e-6)
+
+    def test_relu_backward(self):
+        relu = ReLU()
+        relu.input = np.array([[1.0, -2.0, 3.0], [0.5, -1.0, 2.0]])
+        dA = np.array([[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]])
+        expected_dz = dA.copy()
+        expected_dz[relu.input < 0] = 0
+        actual_dz = relu.backward(dA)
+        np.testing.assert_allclose(actual_dz, expected_dz, rtol=1e-6)
+
+
 if __name__ == '__main__':
     unittest.main()
+

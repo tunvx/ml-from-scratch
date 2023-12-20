@@ -2,4 +2,4 @@ from .l01_logistic_regression import MyLogisticRegression
 from .l02_linear_regression import MyLinearRegression
 from .l03_multinomial_regression import MyMultinomialRegression
 from .l04_k_nearest_neighbor import MyKNNClassifier
-from .l05_mlp import MLPBinaryClassification
+from .l05_mlp import MLPBinaryClassification, MyMLPClassifier

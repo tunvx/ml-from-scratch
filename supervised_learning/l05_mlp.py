@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 
 import nn_case_stydy
 from nn_case_stydy import *
+import nn
 
 # Set a random seed for reproducibility
 np.random.seed(42)
@@ -123,4 +124,63 @@ class MLPBinaryClassification:
         # Transform target data to a column vector
         y = copy.deepcopy(y)
         return y.reshape(-1, 1)
+
+
+import nn  # Assuming you have the necessary module imported
+
+
+class MyMLPClassifier:
+    def __init__(self, n_input, hiddens, n_classes=2):
+        self.n_in = n_input
+        self.hiddens = hiddens
+        self.n_out = 1 if n_classes == 2 else n_classes
+
+        if hiddens[-1] != n_classes:
+            raise ValueError(
+                f"The number of neurons in the output ({hiddens[-1]}) must be equal to the number of output classes ({n_classes}).")
+
+        self.layers = []
+        for i in range(len(hiddens)):
+            input_size = hiddens[i - 1] if i > 0 else n_input
+            output_size = hiddens[i]
+
+            # Append a Linear layer
+            self.layers.append(nn.Linear(n_input=input_size, n_output=output_size))
+
+            # Append a ReLU activation for hidden layers
+            if i + 1 < len(hiddens):
+                self.layers.append(nn.ReLU())
+
+    def info(self):
+        for layer in self.layers:
+            layer.info()
+
+    def __call__(self, x):
+        return self.forward(x)
+
+    def forward(self, x):
+        out = x
+        for layer in self.layers:
+            out = layer.forward(out)
+        return out
+
+    def backward(self, dout):
+        for layer in self.layers[::-1]:
+            dout = layer.backward(dout)
+        return dout
+
+    def parameters(self):
+        return [param for layer in self.layers for param in layer.parameters()]
+
+    def grads(self):
+        return [grad for layer in self.layers for grad in layer.grads()]
+
+    def train(self):
+        for layer in self.layers:
+            layer.train()
+
+    def eval(self):
+        for layer in self.layers:
+            layer.eval()
+
 
