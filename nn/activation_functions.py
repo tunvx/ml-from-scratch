@@ -146,8 +146,8 @@ class ReLU:
         Returns:
         - A : Output of the ReLU function, A = ReLU(z)
         """
-        self.input = z.copy()
-        self.output = z.copy()
+        self.input = np.copy(z)
+        self.output = np.copy(z)
         self.output[z < 0] = 0
         return self.output
 
@@ -161,8 +161,7 @@ class ReLU:
         Returns:
         - dz: Gradient of the loss with respect to the input to the ReLU (dL/dz)
         """
-        self.dz = dA.copy()
-        self.dz[self.input < 0] = 0
+        self.dz = dA * (self.input > 0)
         return self.dz
 
     def parameters(self):
