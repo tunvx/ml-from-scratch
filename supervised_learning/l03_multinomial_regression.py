@@ -4,7 +4,7 @@ import numpy as np
 import math
 import copy
 
-from nn.activation_functions import Softmax
+from nn_case_stydy.activation_functions import Softmax
 
 
 class MyMultinomialRegression:

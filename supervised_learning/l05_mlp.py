@@ -3,8 +3,8 @@ import copy
 import numpy as np
 from sklearn.metrics import accuracy_score
 
-import nn
-from nn import *
+import nn_case_stydy
+from nn_case_stydy import *
 
 # Set a random seed for reproducibility
 np.random.seed(42)
