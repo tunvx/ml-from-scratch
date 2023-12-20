@@ -66,7 +66,7 @@ class MLPBinaryClassification:
         self.linear2.b -= learning_rate * grads["db2"]
 
     def fit(self, X, Y, batch_size=16, learning_rate=0.01, epochs=1000):
-        # Transform input and target data
+        # Transform input and target dataset
         X = self._transform_x(X)
         Y = self._transform_y(Y)
 
@@ -101,7 +101,7 @@ class MLPBinaryClassification:
                 print(f"Epoch {epoch}, bce_loss: {loss:.2f}, accuracy: {acc:.4f}")
 
     def predict(self, X):
-        # Perform predictions on new data
+        # Perform predictions on new dataset
         A2, _ = self.forward_propagation(X)
         return (A2 >= 0.5).astype(int)
 
@@ -115,18 +115,15 @@ class MLPBinaryClassification:
 
     @staticmethod
     def _transform_x(x):
-        # Deep copy the input data
+        # Deep copy the input dataset
         x = copy.deepcopy(x)
         return x
 
     @staticmethod
     def _transform_y(y):
-        # Transform target data to a column vector
+        # Transform target dataset to a column vector
         y = copy.deepcopy(y)
         return y.reshape(-1, 1)
-
-
-import nn  # Assuming you have the necessary module imported
 
 
 class MyMLPClassifier:
@@ -135,22 +132,30 @@ class MyMLPClassifier:
         self.hiddens = hiddens
         self.n_out = 1 if n_classes == 2 else n_classes
 
+        # Validate that the number of neurons in the output layer matches the specified number of classes
         if hiddens[-1] != n_classes:
             raise ValueError(
                 f"The number of neurons in the output ({hiddens[-1]}) must be equal to the number of output classes ({n_classes}).")
 
-        self.layers = []
-        for i in range(len(hiddens)):
-            input_size = hiddens[i - 1] if i > 0 else n_input
-            output_size = hiddens[i]
+        # Build the layers of the MLP
+        self.layers = self._build_layers()
+
+    # Method to construct the layers of the MLP
+    def _build_layers(self):
+        layers = []
+        for i in range(len(self.hiddens)):
+            input_size = self.hiddens[i - 1] if i > 0 else self.n_in
+            output_size = self.hiddens[i]
 
             # Append a Linear layer
-            self.layers.append(nn.Linear(n_input=input_size, n_output=output_size))
+            layers.append(nn.Linear(n_input=input_size, n_output=output_size))
 
-            # Append a ReLU activation for hidden layers
-            if i + 1 < len(hiddens):
-                self.layers.append(nn.ReLU())
+            # Append a ReLU activation for hidden layers (except the last layer)
+            if i + 1 < len(self.hiddens):
+                layers.append(nn.ReLU())
+        return layers
 
+    # Method to print information about each layer in the MLP
     def info(self):
         for layer in self.layers:
             layer.info()
@@ -165,7 +170,7 @@ class MyMLPClassifier:
         return out
 
     def backward(self, dout):
-        for layer in self.layers[::-1]:
+        for layer in reversed(self.layers):
             dout = layer.backward(dout)
         return dout
 
@@ -182,5 +187,3 @@ class MyMLPClassifier:
     def eval(self):
         for layer in self.layers:
             layer.eval()
-
-
