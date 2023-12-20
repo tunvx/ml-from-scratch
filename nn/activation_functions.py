@@ -16,7 +16,7 @@ class Sigmoid:
         - z: Input to the sigmoid function (output of the linear layer)
 
         Returns:
-        - A / output: Output of the sigmoid function
+        - A : Output of the sigmoid function, A = sigmoid(z)
         """
         z = z.copy()  # N x n_out
         positive_indices = z >= 0
@@ -43,8 +43,8 @@ class Sigmoid:
         - dz: Gradient of the loss with respect to the input to the sigmoid (dL/dz)
         """
         sigmoid_derivative = self.output * (1 - self.output)
-        dz = dA * sigmoid_derivative
-        return dz
+        self.dz = dA * sigmoid_derivative
+        return self.dz
 
     def train(self):
         pass
@@ -53,5 +53,44 @@ class Sigmoid:
         pass
 
 
+class ReLu:
+    def __init__(self):
+        pass
 
+    def __call__(self, z):
+        return self.forward(z)
 
+    def forward(self, z):
+        """
+        Compute the forward pass of the ReLU activation function.
+
+        Parameters:
+        - z: Input to the ReLU function (output of the linear layer)
+
+        Returns:
+        - A : Output of the ReLU function, A = ReLU(z)
+        """
+        self.input = z.copy()
+        self.output = z.copy()
+        self.output[z < 0] = 0
+        return self.output
+
+    def backward(self, dA):
+        """
+        Compute the backward pass of the ReLU activation function.
+
+        Parameters:
+        - dA: Gradient of the loss with respect to the output of the ReLU (dL/dRelu)
+
+        Returns:
+        - dz: Gradient of the loss with respect to the input to the ReLU (dL/dz)
+        """
+        self.dz = dA.copy()
+        self.dz[self.input < 0] = 0
+        return self.dz
+
+    def train(self):
+        pass
+
+    def eval(self):
+        pass
