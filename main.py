@@ -5,15 +5,14 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, mean_squared_error, classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
-# Generate synthetic data
-from sklearn.datasets import make_classification
+from sklearn.preprocessing import MinMaxScaler
 
 import nn
-from data.load_data import sklearn_to_df
-from data.make_data import load_planar_dataset, load_extra_datasets
-from nn import CrossEntropyLoss
+from dataset.make_data import load_planar_dataset
+from dataset.load_data import sklearn_to_df, prepare_data_loader
+
 from supervised_learning import *
+
 from optim import SGDOptimizer
 
 
@@ -128,69 +127,61 @@ def test05_mlp_binary_classifier():
     print(classification_report(y_te, y_pred))
 
 
-def test05_mlp_digits_classifier():
-    X, Y = sklearn_to_df(load_digits())
-    print(f"Original shape, X ({X.shape}), Y({Y.shape})")
-    X, Xtest, y, ytest  = train_test_split(X, Y, test_size=0.33, random_state=42)
+def test05_mlp_digits_classification():
+    X_, Y_ = sklearn_to_df(load_digits())
+    print(f"Original shape, X ({X_.shape}), Y({Y_.shape})")
+    X_tr, X_te, y_tr, y_te = train_test_split(X_, Y_, test_size=0.33, random_state=42)
     transform = MinMaxScaler()
-    X = transform.fit_transform(X)
-    Xtest = transform.transform(Xtest)
+    X_tr = transform.fit_transform(X_tr)
+    X_te = transform.transform(X_te)
 
-    n_in, n_out = X.shape[1], 10
+    n_in, n_out = X_tr.shape[1], 10
+
+    model1 = MLPClassifier()
+    model1.fit(X_tr, y_tr)
+    ypred = model1.predict(X_te)
+    print(classification_report(y_true=y_te, y_pred=ypred))
 
     model = MyMLPClassifier(n_input=n_in, hiddens=[128, 64, 32, 10], n_classes=n_out)
     model.info()
-    params = model.parameters()
-    grads = model.grads()
-    print(len(params), len(grads))
 
-    for i in range(10):
-        print(params[i].shape, grads[i].shape, params[i].shape == grads[i].shape)
-
-    optimizer = SGDOptimizer(model, learning_rate=0.1, regularization=0.03)
+    optimizer = SGDOptimizer(model, learning_rate=0.1, regularization=0.01)
     criterion = nn.CrossEntropyLoss()
 
     # Huấn luyện mô hình theo từng mini-batch
-    batch_size = 8
-    num_epochs = 2
-    num_samples = X.shape[0]
-
-    loss = None
+    batch_size = 16
+    num_epochs = 650
 
     for epoch in range(num_epochs):
-        # Shuffle dữ liệu để tạo ra các mini-batch ngẫu nhiên
-        indices = np.random.permutation(num_samples)
-
+        data_loader = prepare_data_loader(X_tr, y_tr, batch_size)
         step = 0
         total_loss, total_correct = 0, 0
         total_sample = 0
 
-        for i in range(0, num_samples, batch_size):
-            # Lấy mini-batch
-            batch_indices = indices[i:i + batch_size]
-            X_batch = X[batch_indices]
-            batch_y = Y[batch_indices]
-
+        for batch_X, batch_y in data_loader:
             # Forward pass
-            batch_yp = model.forward(X_batch)
+            batch_yp = model.forward(batch_X)
             loss = criterion.forward(batch_yp, batch_y)
 
             # Backward pass and an optimization step
             optimizer.zero_grad()
             dout = criterion.backward()
-            dx = model.backward(dout)
+            model.backward(dout)
             optimizer.step()
 
-            ## log training progress
+            # Log training progress
             step += 1
             total_loss += loss
             total_correct += np.sum(np.argmax(batch_yp, axis=1) == batch_y)
             total_sample += len(batch_y)
-            print(f"epoch {epoch} step {step} train_loss {total_loss / total_sample:.4f} train_acc {total_correct / total_sample:.4f}")
 
-    ypred = np.argmax(model.forward(Xtest), axis=1)
-    print(classification_report(ytest, ypred))
-    print(confusion_matrix(ytest, ypred))
+        print(f"Epoch {epoch}, {total_loss / total_sample:.4f}, train_acc {total_correct / total_sample:.4f}")
+
+    model.eval()
+
+    ypred = np.argmax(model.forward(X_te), axis=1)
+    print(classification_report(y_te, ypred))
+    print(confusion_matrix(y_te, ypred))
 
 if __name__ == "__main__":
     # test01_logistic_model()
@@ -198,5 +189,5 @@ if __name__ == "__main__":
     # test03_multinomial_model()
     # test04_knn_classifier_model()
     # test05_mlp_binary_classifier()
-    test05_mlp_digits_classifier()
+    test05_mlp_digits_classification()
 
