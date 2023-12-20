@@ -181,3 +181,59 @@ class ReLU:
         Placeholder for evaluation-related functionality.
         """
         pass
+
+
+class LeakyReLu:
+    def __init__(self, alpha=0.01):
+        self.alpha = alpha
+
+    def __call__(self, z):
+        return self.forward(z)
+
+    def info(self):
+        print("LeakyReLu layer")
+
+    def forward(self, z):
+        """
+        Compute the forward pass of the LeakyReLu activation function.
+
+        Parameters:
+        - z: Input to the LeakyReLu function (output of the linear layer)
+
+        Returns:
+        - A : Output of the LeakyReLu function, A = LeakyReLu(z)
+        """
+        self.input = np.copy(z)
+        self.output = np.where(self.input > 0, z, self.alpha*z)
+        return self.output
+
+    def backward(self, dA):
+        """
+        Compute the backward pass of the LeakyReLu activation function.
+
+        Parameters:
+        - dA: Gradient of the loss with respect to the output of the LeakyReLu (dL/dLeakyReLu)
+
+        Returns:
+        - dz: Gradient of the loss with respect to the input to the LeakyReLu (dL/dz)
+        """
+        self.dz = dA * np.where(self.input > 0, 1, self.alpha)
+        return self.dz
+
+    def parameters(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def grads(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def train(self):
+        """
+        Placeholder for training-related functionality.
+        """
+        pass
+
+    def eval(self):
+        """
+        Placeholder for evaluation-related functionality.
+        """
+        pass

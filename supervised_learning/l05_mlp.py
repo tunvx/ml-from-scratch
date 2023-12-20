@@ -152,7 +152,7 @@ class MyMLPClassifier:
 
             # Append a ReLU activation for hidden layers (except the last layer)
             if i + 1 < len(self.hiddens):
-                layers.append(nn.ReLU())
+                layers.append(nn.LeakyReLu())
         return layers
 
     # Method to print information about each layer in the MLP

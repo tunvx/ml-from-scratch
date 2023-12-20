@@ -24,10 +24,7 @@ class BCELoss:
         return loss
 
     def backward(self):
-        # Backward pass: Compute the gradient of the loss with respect to the input (probability)
-        m = len(self.y_true)
-
-        # Compute the gradient
+        # Backward pass: Compute the gradient of the loss with respect to the input (logit values)
         d_ypred = (self.probability - self.y_true)
         return d_ypred
 
