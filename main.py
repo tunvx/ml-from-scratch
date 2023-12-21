@@ -119,69 +119,6 @@ def test05_mlp_binary_classifier():
     print(f'With {n_epochs} epochs, accuracy my MLP model: {accuracy}')
     print(classification_report(y_te, y_pred))
 
-    model1 = MyMLPClassifier()
-    model1.fit(X_tr, y_tr)
-    y_pred = model1.predict(X_te)
-    accuracy = accuracy_score(y_te, y_pred)
-    print(f'With {n_epochs} epochs, accuracy sklearn model: {accuracy}')
-    print(classification_report(y_te, y_pred))
-
-
-def test05_mlp_digits_classification():
-    X_, Y_ = sklearn_to_df(load_digits())
-    print(f"Original shape, X ({X_.shape}), Y({Y_.shape})")
-    X_tr, X_te, y_tr, y_te = train_test_split(X_, Y_, test_size=0.33, random_state=42)
-    transform = MinMaxScaler()
-    X_tr = transform.fit_transform(X_tr)
-    X_te = transform.transform(X_te)
-
-    n_in, n_out = X_tr.shape[1], 10
-
-    model1 = MLPClassifier()
-    model1.fit(X_tr, y_tr)
-    ypred = model1.predict(X_te)
-    print(classification_report(y_true=y_te, y_pred=ypred))
-
-    model = MyMLPClassifier(n_input=n_in, hiddens=[128, 64, 32, 10], n_classes=n_out)
-    model.info()
-
-    optimizer = SGDOptimizer(model, learning_rate=0.1, regularization=0.01)
-    criterion = nn.CrossEntropyLoss()
-
-    # Huấn luyện mô hình theo từng mini-batch
-    batch_size = 16
-    num_epochs = 650
-
-    for epoch in range(num_epochs):
-        data_loader = prepare_data_loader(X_tr, y_tr, batch_size)
-        step = 0
-        total_loss, total_correct = 0, 0
-        total_sample = 0
-
-        for batch_X, batch_y in data_loader:
-            # Forward pass
-            batch_yp = model.forward(batch_X)
-            loss = criterion.forward(batch_yp, batch_y)
-
-            # Backward pass and an optimization step
-            optimizer.zero_grad()
-            dout = criterion.backward()
-            model.backward(dout)
-            optimizer.step()
-
-            # Log training progress
-            step += 1
-            total_loss += loss
-            total_correct += np.sum(np.argmax(batch_yp, axis=1) == batch_y)
-            total_sample += len(batch_y)
-
-        print(f"Epoch {epoch}, {total_loss / total_sample:.4f}, train_acc {total_correct / total_sample:.4f}")
-
-    model.eval()
-
-    ypred = np.argmax(model.forward(X_te), axis=1)
-    print(classification_report(y_te, ypred))
-    print(confusion_matrix(y_te, ypred))
 
 if __name__ == "__main__":
     # test01_logistic_model()
@@ -189,5 +126,4 @@ if __name__ == "__main__":
     # test03_multinomial_model()
     # test04_knn_classifier_model()
     # test05_mlp_binary_classifier()
-    test05_mlp_digits_classification()
 
