@@ -127,10 +127,11 @@ class MLPBinaryClassification:
 
 
 class MyMLPClassifier:
-    def __init__(self, n_input, hiddens, n_classes=2):
+    def __init__(self, n_input, hiddens, n_classes=2, activation='relu'):
         self.n_in = n_input
         self.hiddens = hiddens
         self.n_out = 1 if n_classes == 2 else n_classes
+        self.activation = activation
 
         # Validate that the number of neurons in the output layer matches the specified number of classes
         if hiddens[-1] != n_classes:
@@ -152,13 +153,23 @@ class MyMLPClassifier:
 
             # Append a ReLU activation for hidden layers (except the last layer)
             if i + 1 < len(self.hiddens):
-                layers.append(nn.LeakyReLu())
+                if self.activation == 'tanh':
+                    layers.append(nn.Tanh())
+                elif self.activation == 'relu':
+                    layers.append(nn.ReLU())
+                elif self.activation == 'leaky_relu':
+                    layers.append(nn.LeakyReLU())
+                else:
+                    raise NotImplementedError(f"NotImplementedError activation={self.activation}")
+
         return layers
 
     # Method to print information about each layer in the MLP
     def info(self):
+        print(f"{self.__class__.__name__}(")
         for layer in self.layers:
             layer.info()
+        print(")")
 
     def __call__(self, x):
         return self.forward(x)
