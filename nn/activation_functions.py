@@ -9,7 +9,7 @@ class Sigmoid:
         return self.forward(z)
 
     def info(self):
-        print("Sigmoid layer")
+        print(f"(sigmoid): {self.__class__.__name__}()")
 
     def forward(self, z):
         """
@@ -76,7 +76,7 @@ class Softmax:
         return self.forward(z)
 
     def info(self):
-        print("Softmax layer")
+        print(f"(softmax): {self.__class__.__name__}()")
 
     def forward(self, z):
         """
@@ -125,6 +125,62 @@ class Softmax:
         pass
 
 
+class Tanh:
+    def __init__(self):
+        pass
+
+    def __call__(self, z):
+        return self.forward(z)
+
+    def info(self):
+        print(f"(tanh): {self.__class__.__name__}()")
+
+    def forward(self, z):
+        """
+        Compute the forward pass of the tanh activation function.
+
+        Parameters:
+        - z: Input to the tanh function (output of the linear layer)
+
+        Returns:
+        - A: Output of the tanh function, A = tanh(x)
+        """
+        self.input = z
+        self.output = np.tanh(z)
+        return self.output
+
+    def backward(self, dA):
+        """
+        Compute the backward pass of the tanh activation function.
+
+        Parameters:
+        - dA: Gradient of the loss with respect to the output of the tanh (dL/dtanh)
+
+        Returns:
+        - dX: Gradient of the loss with respect to the input to the tanh (dL/dx)
+        """
+        tanh_derivative = 1.0 - self.output**2
+        dX = dA * tanh_derivative
+        return dX
+
+    def parameters(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def grads(self):
+        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
+
+    def train(self):
+        """
+        Placeholder for training-related functionality.
+        """
+        pass
+
+    def eval(self):
+        """
+        Placeholder for evaluation-related functionality.
+        """
+        pass
+
 
 class ReLU:
     def __init__(self):
@@ -134,7 +190,7 @@ class ReLU:
         return self.forward(z)
 
     def info(self):
-        print("ReLu layer")
+        print(f"(relu): {self.__class__.__name__}()")
 
     def forward(self, z):
         """
@@ -183,7 +239,7 @@ class ReLU:
         pass
 
 
-class LeakyReLu:
+class LeakyReLU:
     def __init__(self, alpha=0.01):
         self.alpha = alpha
 
@@ -191,7 +247,7 @@ class LeakyReLu:
         return self.forward(z)
 
     def info(self):
-        print("LeakyReLu layer")
+        print(f"(leaky_relu): {self.__class__.__name__}()")
 
     def forward(self, z):
         """
