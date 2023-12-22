@@ -3,10 +3,11 @@ import numpy as np
 
 
 class SGDOptimizer:
-    def __init__(self, model, learning_rate, regularization=0.0):
+    def __init__(self, model, learning_rate, regularization=0.0, decay_learning_rate=True):
         self.model = model
         self.learning_rate = learning_rate
         self.regularization = regularization
+        self.decay_learning_rate = decay_learning_rate
         self.current_step = 0
 
     def parameters(self):
@@ -26,6 +27,12 @@ class SGDOptimizer:
         # the learning rate is reduced over time for convergence
         self.current_step += 1
         for p, g in zip(self.parameters(), self.grads()):
-            g = self.regularization * p + g
-            g = np.clip(g, -1, 1)
-            p -= 1.0 / math.sqrt(self.current_step) * self.learning_rate * g
+            g = self.regularization * p + g     # apply L2 regularization
+            g = np.clip(g, -1, 1)               # clip gradients to avoid exploding gradients
+            
+            if self.decay_learning_rate:
+                # Update the model parameter using gradient descent with a decaying learning rate
+                p -= 1.0 / math.sqrt(self.current_step) * self.learning_rate * g
+            else:
+                # Alternatively, without decaying learning rate:
+                p -= self.learning_rate * g
