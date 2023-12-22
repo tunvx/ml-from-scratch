@@ -127,19 +127,26 @@ class MLPBinaryClassification:
 
 
 class MyMLPClassifier:
-    def __init__(self, n_input, hiddens, n_classes=2, activation='relu'):
+    def __init__(self, n_input, hiddens, n_output=2, activation='relu', last_layer_linear=True):
         self.n_in = n_input
         self.hiddens = hiddens
-        self.n_out = 1 if n_classes == 2 else n_classes
+        self.n_out = n_output
         self.activation = activation
-
-        # Validate that the number of neurons in the output layer matches the specified number of classes
-        if hiddens[-1] != n_classes:
-            raise ValueError(
-                f"The number of neurons in the output ({hiddens[-1]}) must be equal to the number of output classes ({n_classes}).")
+        self.last_layer_linear = last_layer_linear
 
         # Build the layers of the MLP
         self.layers = self._build_layers()
+
+    # Method to create model activation function
+    def _model_activation_function(self):
+        if self.activation == 'tanh':
+            return nn.Tanh()
+        elif self.activation == 'relu':
+            return nn.ReLU()
+        elif self.activation == 'leaky_relu':
+            return nn.LeakyReLU()
+        else:
+            raise NotImplementedError(f"NotImplementedError activation={self.activation}")
 
     # Method to construct the layers of the MLP
     def _build_layers(self):
@@ -150,18 +157,12 @@ class MyMLPClassifier:
 
             # Append a Linear layer
             layers.append(nn.Linear(n_input=input_size, n_output=output_size))
+            layers.append(self._model_activation_function())
 
-            # Append a ReLU activation for hidden layers (except the last layer)
-            if i + 1 < len(self.hiddens):
-                if self.activation == 'tanh':
-                    layers.append(nn.Tanh())
-                elif self.activation == 'relu':
-                    layers.append(nn.ReLU())
-                elif self.activation == 'leaky_relu':
-                    layers.append(nn.LeakyReLU())
-                else:
-                    raise NotImplementedError(f"NotImplementedError activation={self.activation}")
-
+        # Add last layer (..., n_output)
+        layers.append(nn.Linear(n_input=self.hiddens[-1], n_output=self.n_out))
+        if not self.last_layer_linear:
+            layers.append(self._model_activation_function)
         return layers
 
     # Method to print information about each layer in the MLP
