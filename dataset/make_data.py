@@ -18,6 +18,8 @@ def load_planar_dataset():
         X[ix] = np.c_[r * np.sin(t), r * np.cos(t)]
         Y[ix] = j
 
+    Y = Y.flatten()
+
     return X, Y
 
 
