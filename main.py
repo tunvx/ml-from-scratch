@@ -107,13 +107,13 @@ def test05_mlp_binary_classifier():
     print(X.shape, Y.shape)
     X_tr, X_te, y_tr, y_te = train_test_split(X, Y, test_size=0.21)
 
-    n_epochs = 25
+    n_epochs = 120
     batch_size = 8
 
     # Instantiate the model
     model = MLPBinaryClassification(n_input=2, n_hidden=5, n_output=1)
     # Train the model
-    model.fit(X_tr, y_tr, batch_size=batch_size, learning_rate=0.15, epochs=n_epochs)
+    model.fit(X_tr, y_tr, batch_size=batch_size, learning_rate=0.2, epochs=n_epochs)
     y_pred = model.predict(X_te)
     accuracy = accuracy_score(y_te, y_pred)
     print(f'With {n_epochs} epochs, accuracy my MLP model: {accuracy}')
@@ -125,6 +125,5 @@ if __name__ == "__main__":
     # test02_linear_model()
     # test03_multinomial_model()
     # test04_knn_classifier_model()
-    # test05_mlp_binary_classifier()
-    pass
+    test05_mlp_binary_classifier()
 

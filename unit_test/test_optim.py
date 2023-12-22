@@ -8,7 +8,7 @@ from supervised_learning import MyMLPClassifier
 
 class TestSGDMethods(unittest.TestCase):
     def test_sgd_init(self):
-        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_classes=2)
+        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_output=2)
         sgd = SGDOptimizer(model, learning_rate=0.2, regularization=0.1)
         param = sgd.parameters()
         grad = sgd.grads()
@@ -19,7 +19,7 @@ class TestSGDMethods(unittest.TestCase):
         self.assertEqual(sgd.regularization, 0.1)
 
     def test_sgd_zero_grad(self):
-        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_classes=2)
+        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_output=2)
         sgd = SGDOptimizer(model, learning_rate=0.2)
         sgd.zero_grad()
 
@@ -43,7 +43,7 @@ class TestSGDMethods(unittest.TestCase):
         sgd.step()
 
     def test_sgd_n_step(self):
-        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_classes=2)
+        model = MyMLPClassifier(n_input=10, hiddens=[5, 2], n_output=2)
         sgd = SGDOptimizer(model, learning_rate=0.02)
         loss_func = CrossEntropyLoss()
         n_step = 10
