@@ -1,10 +1,13 @@
 import math
 import numpy as np
 
+from nn import BaseLayer
 
-class Linear:
+
+class Linear(BaseLayer):
     def __init__(self, n_input, n_output):
         # Number of input and output features
+        super().__init__()
         self.n_in = n_input
         self.n_out = n_output
 
@@ -67,7 +70,7 @@ class Linear:
         - weight: Weight matrix
         - bias: Bias vector
         """
-        return self.weight, self.bias
+        return [self.weight, self.bias]
 
     def grads(self):
         """
@@ -77,16 +80,4 @@ class Linear:
         - dW: Gradient of the loss with respect to the weights
         - db: Gradient of the loss with respect to the biases
         """
-        return self.dW, self.db
-
-    def train(self):
-        """
-        Placeholder for training-related functionality.
-        """
-        pass
-
-    def eval(self):
-        """
-        Placeholder for evaluation-related functionality.
-        """
-        pass
+        return [self.dW, self.db]

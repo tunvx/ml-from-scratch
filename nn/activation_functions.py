@@ -1,12 +1,14 @@
 import numpy as np
 
+from nn import BaseLayer
 
-class Sigmoid:
+
+class Sigmoid(BaseLayer):
     def __init__(self):
-        pass
+        super().__init__()
 
-    def __call__(self, z):
-        return self.forward(z)
+    def __call__(self, x):
+        return self.forward(x)
 
     def info(self):
         print(f"(sigmoid): {self.__class__.__name__}()")
@@ -49,28 +51,10 @@ class Sigmoid:
         self.dz = dA * sigmoid_derivative
         return self.dz
 
-    def parameters(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
 
-    def grads(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
-
-    def train(self):
-        """
-        Placeholder for training-related functionality.
-        """
-        pass
-
-    def eval(self):
-        """
-        Placeholder for evaluation-related functionality.
-        """
-        pass
-
-
-class Softmax:
+class Softmax(BaseLayer):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __call__(self, z):
         return self.forward(z)
@@ -106,28 +90,10 @@ class Softmax:
         dz = dA * softmax_derivative
         return dz
 
-    def parameters(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
 
-    def grads(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
-
-    def train(self):
-        """
-        Placeholder for training-related functionality.
-        """
-        pass
-
-    def eval(self):
-        """
-        Placeholder for evaluation-related functionality.
-        """
-        pass
-
-
-class Tanh:
+class Tanh(BaseLayer):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __call__(self, z):
         return self.forward(z)
@@ -159,32 +125,14 @@ class Tanh:
         Returns:
         - dX: Gradient of the loss with respect to the input to the tanh (dL/dx)
         """
-        tanh_derivative = 1.0 - self.output**2
+        tanh_derivative = 1.0 - self.output ** 2
         dX = dA * tanh_derivative
         return dX
 
-    def parameters(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
 
-    def grads(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
-
-    def train(self):
-        """
-        Placeholder for training-related functionality.
-        """
-        pass
-
-    def eval(self):
-        """
-        Placeholder for evaluation-related functionality.
-        """
-        pass
-
-
-class ReLU:
+class ReLU(BaseLayer):
     def __init__(self):
-        pass
+        super().__init__()
 
     def __call__(self, z):
         return self.forward(z)
@@ -220,27 +168,10 @@ class ReLU:
         self.dz = dA * (self.input > 0)
         return self.dz
 
-    def parameters(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
 
-    def grads(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
-
-    def train(self):
-        """
-        Placeholder for training-related functionality.
-        """
-        pass
-
-    def eval(self):
-        """
-        Placeholder for evaluation-related functionality.
-        """
-        pass
-
-
-class LeakyReLU:
+class LeakyReLU(BaseLayer):
     def __init__(self, alpha=0.01):
+        super().__init__()
         self.alpha = alpha
 
     def __call__(self, z):
@@ -260,7 +191,7 @@ class LeakyReLU:
         - A : Output of the LeakyReLu function, A = LeakyReLu(z)
         """
         self.input = np.copy(z)
-        self.output = np.where(self.input > 0, z, self.alpha*z)
+        self.output = np.where(self.input > 0, z, self.alpha * z)
         return self.output
 
     def backward(self, dA):
@@ -275,21 +206,3 @@ class LeakyReLU:
         """
         self.dz = dA * np.where(self.input > 0, 1, self.alpha)
         return self.dz
-
-    def parameters(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
-
-    def grads(self):
-        return np.array([0.0], dtype=np.float64), np.array([0.0], dtype=np.float64)
-
-    def train(self):
-        """
-        Placeholder for training-related functionality.
-        """
-        pass
-
-    def eval(self):
-        """
-        Placeholder for evaluation-related functionality.
-        """
-        pass

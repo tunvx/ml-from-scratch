@@ -16,10 +16,10 @@ def sklearn_to_df(data_loader):
 def prepare_data_loader(X, y, batch_size):
     n = X.shape[0]
     permutation = np.random.permutation(n)
-    for start_idx in range(0, n, batch_size):
-        end_idx = start_idx + batch_size if batch_size <= n else n
-        batch_x = X[start_idx:end_idx]
-        batch_y = y[start_idx:end_idx]
+    for i in range(0, n, batch_size):
+        j = i + batch_size if i + batch_size <= n else n
+        batch_x = X[permutation[i:j]]
+        batch_y = y[permutation[i:j]]
         yield batch_x, batch_y
 
 
