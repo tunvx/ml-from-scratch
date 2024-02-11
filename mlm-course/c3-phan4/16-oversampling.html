@@ -1,0 +1,578 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.loli.net/css?family=Didact+Gothic&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857143; overflow-x: hidden; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; tab-size: 4; background-position: inherit; background-repeat: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror-linenumber { -webkit-user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit; background-repeat: inherit; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; background-position: 0px 0px; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background-color: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; }
+a.md-print-anchor { white-space: pre !important; border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; text-shadow: initial !important; background-position: 0px 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; background-position: inherit; background-repeat: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571429rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+
+
+@include-when-export url(https://fonts.loli.net/css?family=Didact+Gothic&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext);
+
+/* cyrillic-ext */
+/* cyrillic */
+:root {
+	--window-border: none;
+	--typora-center-window-title: true;
+	--active-file-bg-color: #f3f3f3;
+	--bg-color: #fcfcfc;
+	--control-text-color: #777;
+}
+
+.mac-seamless-mode #typora-sidebar {
+	top: 20px;
+	padding-top: 0;
+	height: auto;
+}
+
+html,
+body,
+#write{
+	background: #fcfcfc;
+	background: var(--bg-color);
+	font-family: 'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", 'Segoe UI Emoji', sans-serif;
+	font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #111;
+	font-family: 'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", sans-serif;
+}
+
+html {
+	font-size:16px;
+}
+
+#write {
+	max-width: 914px;
+	text-align: justify;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+#write>h1:first-child {
+	margin-top: 2.75rem;
+}
+#write>h2:first-child {
+	margin-top: 1.75rem;
+}
+#write>h3:first-child {
+	margin-top: 1rem;
+}
+#write>h4:first-child {
+	margin-top: 0.5rem;
+}
+h1 {
+	font-weight: normal;
+	line-height: 4rem;
+	margin: 0 0 1.75rem;
+	padding: 20px 30px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 4rem;
+}
+h2 {
+	font-weight: normal;
+	line-height: 3rem;
+	margin: 0 0 1.9375rem;
+	padding: 0 30px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 3rem
+}
+h3 {
+	font-weight: normal;
+}
+h4 {
+	font-weight: normal;
+}
+h5 {
+	font-size: 1.125rem;
+	font-weight: normal;
+}
+h6 {
+	font-size: 1rem;
+	font-weight: bold;
+}
+p {
+	color: #111;
+	font-size: 1rem;
+	line-height: 1.75rem;
+	margin: 0 0 1.25rem;
+}
+#write>h3.md-focus:before {
+	left: -1.875rem;
+	top: 0.5rem;
+	padding: 2px;
+}
+#write>h4.md-focus:before {
+	left: -1.875rem;
+	top: 0.3125rem;
+	padding: 2px;
+}
+#write>h5.md-focus:before {
+	left: -1.875rem;
+	top: 0.25rem;
+	padding: 2px;
+}
+#write>h6.md-focus:before {
+	left: -1.875rem;
+	top: .125rem;
+	padding: 2px;
+}
+@media screen and (max-width: 48em) {
+	blockquote {
+		margin-left: 1rem;
+		margin-right: 0;
+		padding: 0.5em;
+	}
+	.h1,
+	h1 {
+		font-size: 2.827rem;
+	}
+	.h2,
+	h2 {
+		font-size: 1.999rem;
+	}
+	.h3,
+	h3 {
+		font-size: 1.413rem;
+	}
+	.h4,
+	h4 {
+		font-size: 1.250rem;
+	}
+	.h5,
+	h5 {
+		font-size: 1.150rem;
+	}
+	.h6,
+	h6 {
+		font-size: 1rem;
+	}
+}
+a,
+.md-def-url {
+	color: #990000;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+table {
+	margin-bottom: 20px
+}
+table th,
+table td {
+	padding: 8px;
+	line-height: 1.25rem;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+table th {
+	font-weight: bold
+}
+table thead th {
+	vertical-align: bottom
+}
+table caption+thead tr:first-child th,
+table caption+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table colgroup+thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+	border-top: 0
+}
+table tbody+tbody {
+	border-top: 2px solid #ddd
+}
+code, .md-fences {
+	padding: .5em;
+	/*background: #f0f0f0;*/
+	border: 1px solid #ccc;
+	padding: .1em;
+	font-size: 0.9em;
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+}
+.md-fences {
+	margin: 0 0 20px;
+	font-size: 1em;
+	padding: 0.3em 1em;
+  	padding-top: 0.4em;
+}
+.task-list{
+	padding-left: 0;
+}
+
+.task-list-item {
+	padding-left:2.125rem;
+}
+
+input {
+	border-style: ridge;
+}
+
+.task-list-item input {
+	top: 3px;
+}
+
+.md-task-list-item input {
+	margin-left: -1.5em;
+}
+
+.task-list-item input:before {
+	content: "";
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid gray;
+	background-color: #fdfdfd;
+	margin-left: 0;
+	-webkit-appearance: none;
+	margin-top: -1rem;
+}
+
+.typora-node .task-list-item input:before {
+	top: 0.3ex;
+	position: absolute;
+}
+
+.task-list-item input:checked:before,
+.task-list-item input[checked]:before{
+	content: '\25FC';
+	/*◘*/
+	font-size: 0.8125rem;
+	line-height: 0.9375rem;
+}
+
+/* Chrome 29+ */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+    .task-list-item input:before {
+    	margin-top: -0.2rem;
+    }
+
+    .task-list-item input:checked:before,
+	.task-list-item input[checked]:before {
+		margin-top: -0.2rem;
+	}
+}
+
+blockquote {
+	margin: 0 0 1.11111rem;
+	padding: 0.5rem 1.11111rem 0 1.05556rem;
+	border-left: 1px solid gray;
+}
+blockquote,
+blockquote p {
+	line-height: 1.6;
+	color: #6f6f6f;
+}
+#write pre.md-meta-block {
+	min-height: 30px;
+	background: #f8f8f8;
+	padding: 1.5em;
+	font-weight: 300;
+	font-size: 1em;
+	padding-bottom: 1.5em;
+	padding-top: 3em;
+    margin-top: -1.5em;
+	color: #999;
+	
+	width: 100vw;
+	max-width: calc(100% + 60px);
+	margin-left: -30px;
+	border-left: 30px #f8f8f8 solid;
+	border-right: 30px #f8f8f8 solid;
+}
+.MathJax_Display {
+	font-size: 0.9em;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+}
+p.mathjax-block,
+.mathjax-block {
+	padding-bottom: 0;
+}
+.mathjax-block>.code-tooltip {
+	bottom: 5px;
+	box-shadow: none;
+}
+.md-image>.md-meta {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+.md-image>img {
+	margin-top: 2px;
+}
+.md-image>.md-meta:first-of-type:before {
+	padding-left: 4px;
+}
+
+#typora-source {
+	color: #555;
+}
+
+/** ui for windows **/
+#md-searchpanel {
+    border-bottom: 1px solid #ccc;
+}
+
+#md-searchpanel .btn {
+    border: 1px solid #ccc;
+}
+
+#md-notification:before {
+	top: 14px;
+}
+
+#md-notification {
+	background: #eee;
+}
+
+.megamenu-menu-panel .btn {
+	border: 1px solid #ccc;
+}
+
+#typora-sidebar {
+	box-shadow: none;
+}
+
+.file-list-item ,
+.show-folder-name .file-list-item {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	line-height: 20px;
+}
+
+.file-list-item-summary {
+	height: 40px;
+	line-height: 20px;
+}
+
+.ty-table-edit {
+	background: #ededed;
+}
+
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>16-oversampling</title>
+</head>
+<body class='typora-export typora-export-show-outline typora-export-collapse-outline'><div class='typora-export-content'>
+<div class="typora-export-sidebar"><div class="outline-content"><li class="outline-item-wrapper outline-h1 outline-item-open"><div class="outline-item"><span class="outline-expander"></span><a class="outline-label" href="#oversampling">Oversampling</a></div><ul class="outline-children"><li class="outline-item-wrapper outline-h3 outline-item-single"><div class="outline-item"><span class="outline-expander"></span><a class="outline-label" href="#1-trích-xuất-mẫu">1. Trích xuất mẫu</a></div><ul class="outline-children"></ul></li><li class="outline-item-wrapper outline-h3 outline-item-single"><div class="outline-item"><span class="outline-expander"></span><a class="outline-label" href="#2-tạo-mẫu">2. Tạo mẫu</a></div><ul class="outline-children"></ul></li><li class="outline-item-wrapper outline-h3 outline-item-single"><div class="outline-item"><span class="outline-expander"></span><a class="outline-label" href="#3-so-sánh">3. So sánh</a></div><ul class="outline-children"></ul></li><li class="outline-item-wrapper outline-h3 outline-item-single"><div class="outline-item"><span class="outline-expander"></span><a class="outline-label" href="#labs">Labs</a></div><ul class="outline-children"></ul></li></ul></li></div></div><div id='write'  class=''><h1 id='oversampling'><span>Oversampling</span></h1><h3 id='1-trích-xuất-mẫu'><span>1. Trích xuất mẫu</span></h3><p><span>Trong Random Oversampling, chúng ta trích xuất ngẫu nhiên các quan sát của lớp thiểu số cho đến khi đạt được tỷ lệ cân bằng nhất định. Đây là một kỹ thuật ngây thơ vì nó chỉ lấy mẫu ngẫu nhiên mà không đưa ra bất kỳ giả định nào về phân phối. Bằng cách trích xuất các mẫu một cách ngẫu nhiên, chúng ta thực ra đang sao chép các mẫu của lớp thiểu số để trong tập dữ liệu cuối cùng, chúng ta sẽ có nhiều quan sát giống hệt nhau. Điều này có thể khiến mô hình học máy overfit.</span></p><p><span>Để tạo ít mẫu trùng lặp hơn, chúng ta có thể giảm tỷ lệ cân bằng để trích xuất ít mẫu từ lớp thiểu số hơn. Chúng ta cần thử phương pháp này với các tỷ lệ cân bằng khác nhau và xem liệu nó có tạo thêm lợi thế về chất lượng mô hình không.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043534#overview'><span>Random Over-Sampling</span></a></p></li></ul><h3 id='2-tạo-mẫu'><span>2. Tạo mẫu</span></h3><p><span>SMOTE (Synthetic Minority Over-sampling Technique) tạo ra các quan sát mới của lớp thiểu số bằng cách nội suy. Nội suy (Interpolation) là một loại ước tính mà chúng ta tạo các điểm dữ liệu mới trong phạm vi của các điểm dữ liệu đã biết.</span></p><p><span>SMOTE nội suy các mẫu mới theo hướng giữa mẫu ban đầu mà chúng ta lấy làm template và bất kỳ neighbour nào trong k neighbour của nó, với mẫu ban đầu và các neighbour này là kết quả của KNN chạy trên mẫu ban đầu (k thường là 5).</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043540#overview'><span>SMOTE</span></a></p></li></ul><p><span>MOTE-NC (SMOTE - Nominal Continuous) về cơ bản mở rộng chức năng của thuật toán SMOTE mà chúng ta đã mô tả trong video trước để nó có thể hoạt động với biến hạng mục. Đó là những đặc trưng có giá trị là hạng mục hoặc string thay vì số.</span></p><p><span>Làm thế nào để tính toán được khoảng cách giữa các biến hạng mục? Các giá trị giống nhau sẽ có khoảng cách bằng 0, các giá trị khác nhau chúng ta sẽ dùng trung vị của độ lệch chuẩn của các biến số còn lại.</span></p><p><span>Sau đó, làm cách nào để tạo các mẫu tổng hợp mới này? Với các biến dạng số, chúng ta sẽ thực hiện chính xác như những gì chúng ta làm với SMOTE. Còn các giá trị hạng mục được tính là các giá trị được hiển thị bởi phần lớn các neighbour.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043550#overview'><span>SMOTE-NC</span></a></p></li></ul><p><span>ADASYN sử dụng phân phối có trọng số của lớp thiểu số để tạo dữ liệu tổng hợp mới, và phân phối này được tính trọng số tùy theo mức độ khó học hoặc khó phân loại của các quan sát. Vậy sẽ có nhiều dữ liệu tổng hợp hơn được tạo ra từ các mẫu khó phân loại hơn.</span></p><p><span>SMOTE sử dụng tất cả các mẫu của lớp thiểu số để tạo dữ liệu tổng hợp, ADASYN cũng sử dụng tất cả các mẫu của lớp thiểu số, nhưng nó sẽ sử dụng nhiều mẫu làm template của lớp thiểu số khó phân loại hơn và ít mẫu dễ phân loại hơn. Vì vậy, trong trường hợp SMOTE, các mẫu của lớp thiểu số để tạo dữ liệu tổng hợp sẽ không được chọn ngẫu nhiên. </span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043554#overview'><span>ADASYN</span></a></p></li></ul><p><span>SMOTE đường biên là một biến thể của SMOTE, chỉ tạo ra các ví dụ tổng hợp từ các quan sát trong lớp thiểu số gần hơn với ranh giới với (các) lớp đa số. SMOTE đường biên có hai biến thể, ở phiên bản 1, nó sẽ chỉ tạo neighbour từ lớp thiểu số, nhưng ở phiên bản 2, nó sẽ nội suy cả từ neighbour của lớp thiểu số và lớp đa số.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043562#overview'><span>SMOTE đường biên</span></a></p></li></ul><p><span>Ở bước đầu tiên, SVM SMOTE sẽ huấn luyện một SVM trên toàn tập tập dữ liệu. Nó sẽ tìm các vectơ hỗ trợ. Chúng ta có các vectơ hỗ trợ của lớp thiểu số và lớp đa số, trong trường hợp này nó sẽ chỉ chọn các vectơ hỗ trợ từ lớp thiểu số. Và đây sẽ là khuôn mẫu cho dữ liệu tổng hợp.</span></p><p><span>Có hai phương pháp tạo dữ liệu tổng hợp. Chúng ta có phép nội suy như SMOTE và phép ngoại suy là điểm mới trong phương pháp này. Nếu vectơ hỗ trợ được bao quanh chủ yếu bởi các neighbour từ lớp thiểu số, nó sẽ tạo dữ liệu bằng phép ngoại suy (chúng ta sẽ mở rộng ranh giới của lớp thiểu số với phép ngoại suy). Nhưng nếu vectơ hỗ trợ được bao quanh chủ yếu bởi các neighbour từ lớp đa số, nó sẽ tạo dữ liệu bằng phép nội suy.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043568#overview'><span>SVM SMOTE</span></a></p></li></ul><p><span>Ý tưởng của K-Means SMOTE là thúc đẩy các khu vực lớp thiểu số bằng cách tạo các mẫu trong các cụm xuất hiện tự nhiên của lớp thiểu số. Điều kiện tiên quyết để triển khai kỹ thuật này là cần có cụm tự nhiên của lớp thiểu số. Nếu tập dữ liệu không có các cụm này thì sử dụng kỹ thuật này không có tác dụng gì cả.</span></p><p><span>K-Means SMOTE sẽ xem xét các cụm trong lớp, chọn ra một vài cụm thỏa mãn các tiêu chí tỉ lệ nhất định và tránh tạo nhiễu bằng cách chỉ tạo mẫu trong các cụm đó. Trong thuật toán này, số cụm của K-Means, tỷ lệ mất cân bằng để lọc ra các cụm và số lượng neighbour mà chúng ta sử dụng để tạo mẫu là những siêu tham số cần được điều chỉnh và tối ưu.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043574#overview'><span>K-Means SMOTE</span></a></p></li></ul><h3 id='3-so-sánh'><span>3. So sánh</span></h3><p><span>Các mô hình khác nhau có xu hướng hoạt động tốt nhất trên các tập dữ liệu khác nhau. Vì vậy, khi thực hiện các dự án của mình, chúng ta cần thử nghiệm để biết kỹ thuật oversampling nào sẽ cho chất lượng mô hình tốt nhất. Chúng ta có rất nhiều công cụ được đề xuất, có thể sử dụng để nâng cao hiệu suất.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23043586#overview'><span>So sánh các phương pháp oversampling</span></a></p></li></ul><p><span>Khi chúng ta </span><strong><span>khuếch đại những quan sát của lớp thiểu số</span></strong><span> với oversampling, ngẫu nhiên hoặc bằng cách tạo mẫu mới, trong nhiều trường hợp, chúng ta cũng có thể khuếch đại nhiễu. Với các phương pháp Undersampling, chúng ta có thể </span><strong><span>loại bỏ các quan sát nhiễu</span></strong><span>, là những quan sát nằm ngoài ranh giới. Tuy nhiên, chúng ta cũng sẽ làm mất thông tin quan trọng khi undersample lớp đa số.</span></p><p><span>Liệu chúng ta có thể kết hợp những mặt tích cực của các phương pháp Oversampling và Undersampling để tạo tập dữ liệu tốt hơn không? Một số người cho rằng chúng ta có thể tận dụng ưu điểm của cả hai. Nếu chúng ta kết hợp kỹ thuật Oversampling và Undersampling cách thích hợp, chúng ta có thể sử dụng phương pháp </span><strong><span>Oversampling để tạo nhiều quan sát hơn một cách ngẫu nhiên của lớp thiểu số (random generation - SMOTE)</span></strong><span>, là lớp ít được biểu diễn trong tập dữ liệu. Sau đó, chúng ta có thể sử dụng phương pháp </span><strong><span>Undersampling (NCR, ENN, Tomek Links, Instance Hardness)</span></strong><span> </span><strong><span>để</span></strong><span> </span><strong><span>loại bỏ những quan sát nhiễu trong tập thiểu số mới được tạo</span></strong><span>, giúp hạn chế tác động của kỹ thuật Oversampling này đối với nhiễu, cũng như hạn chế tác động của kỹ thuật Undersampling với việc làm mất thông tin của lớp đa số.</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23171978#overview'><span>Kết hợp over và under-sampling</span></a></p></li></ul><p><span>Trong video này, chúng ta sẽ so sánh việc kết hợp sử dụng các phương pháp Oversampling và Undersampling so với chỉ sử dụng kỹ thuật Oversampling và xem liệu quá trính này có làm tăng chất lượng của mô hình học máy hay không</span></p><ul><li><p><strong><span>Video:</span></strong><span> </span><a href='https://funix.udemy.com/course/machine-learning-with-imbalanced-data/learn/lecture/23171986#overview'><span>So sánh kết hợp over và under-sampling với oversampling</span></a></p></li></ul><p>&nbsp;</p><h3 id='labs'><span>Labs</span></h3><ul><li><p><a href='https://drive.google.com/drive/folders/1SVdlaVeFIy5-nFEYY424ul9jhywyL1JM?usp=share_link'><span>Notebooks</span></a></p><p>&nbsp;</p></li></ul></div></div>
+
+<script>(function (){var t=document.body.parentElement,e=[],n=null,i=document.body.classList.contains("typora-export-collapse-outline"),r=function(t,e,n){document.addEventListener(t,function(t){if(!t.defaultPrevented)for(var i=t.target;i&&i!=this;i=i.parentNode)if(i.matches(e)){!1===n.call(i,t)&&(t.preventDefault(),t.stopPropagation());break}},!1)};function o(){return t.scrollTop}r("click",".outline-expander",function(t){var e=this.closest(".outline-item-wrapper").classList;return e.contains("outline-item-open")?e.remove("outline-item-open"):e.add("outline-item-open"),c(),!1}),r("click",".outline-item",function(t){var e=this.querySelector(".outline-label");if(location.hash="#"+e.getAttribute("href"),i){var n=this.closest(".outline-item-wrapper").classList;n.contains("outline-item-open")||n.add("outline-item-open"),l(),n.add("outline-item-active")}});var a,s,u=function(){var t=o();n=null;for(var i=0;i<e.length&&e[i][1]-t<60;i++)n=e[i]},l=function(){document.querySelectorAll(".outline-item-active").forEach(t=>t.classList.remove("outline-item-active")),document.querySelectorAll(".outline-item-single.outline-item-open").forEach(t=>t.classList.remove("outline-item-open"))},c=function(){if(n){l();var t=document.querySelector('.outline-label[href="#'+(CSS.escape?CSS.escape(n[0]):n[0])+'"]');if(t)if(i){var e=t.closest(".outline-item-open>ul>.outline-item-wrapper");if(e)e.classList.add("outline-item-active");else{for(var r=(t=t.closest(".outline-item-wrapper")).parentElement.closest(".outline-item-wrapper");r;)r=(t=r).parentElement.closest(".outline-item-wrapper");t.classList.add("outline-item-active")}}else t.closest(".outline-item-wrapper").classList.add("outline-item-active")}};window.addEventListener("scroll",function(t){a&&clearTimeout(a),a=setTimeout(function(){u(),c()},300)});var f=function(){s=setTimeout(function(){!function(){e=[];var t=o();document.querySelector("#write").querySelectorAll("h1, h2, h3, h4, h5, h6").forEach(n=>{var i=n.getAttribute("id");e.push([i,t+n.getBoundingClientRect().y])})}(),u(),c()},300)};window.addEventListener("resize",function(t){s&&clearTimeout(s),f()}),f()})();</script></body>
+</html>
